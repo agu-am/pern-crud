@@ -1,5 +1,6 @@
 import express, { urlencoded } from "express";
 import morgan from "morgan"
+import cookieParser from "cookie-parser";
 import taskRoutes from "./routes/task.routes.js"
 import authRoutes from "./routes/auth.routes.js"
 
@@ -7,6 +8,7 @@ const app = express()
 
 //MIDDLEWARE
 app.use(morgan("dev"))
+app.use(cookieParser())
 app.use(express.json())
 app.use(urlencoded({ extended: false }))
 
