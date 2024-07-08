@@ -5,23 +5,23 @@ import { useAuth } from "../context/AuthContext"
 
 function LoginPage() {
 
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, formState: { errors } } = useForm()
 
   const navigate = useNavigate()
 
-  const { signIn, errors } = useAuth()
+  const { signIn, errors : loginErrors } = useAuth()
 
   const onSubmit = handleSubmit(async (data) => {
     const user = await signIn(data)
-    if (user) navigate('/profile')
+    if (user) navigate('/tasks')
   })
 
   return (
     <Container className="h-[calc(100vh-10rem)] flex items-center justify-center">
       <Card>
         {
-          errors && (
-            errors.map(error => (
+          loginErrors && (
+            loginErrors.map(error => (
               <p key={error} className="bg-red-500 text-white p-2 my-2 rounded-sm text-center">{error}</p>
             ))
           )
@@ -32,15 +32,17 @@ function LoginPage() {
             Email
           </Label>
           <Input placeholder="Ingrese su correo" type="email" {...register("email", { required: true })} />
+          {errors.email && <p className="text-red-500">El correo es requerido</p>}
           <Label htmlFor={"password"}>
             Contraseña
           </Label>
           <Input placeholder="Ingrese su contraseña" type="password" {...register("password", { required: true })} />
+          {errors.password && <p className="text-red-500">La contraseña es requerida</p>}
           <Button>
             Ingresar
           </Button>
           <div className="flex justify-between my-4">
-            <p>
+            <p className="mr-2">
               No estas registrado?
             </p>
             <Link to="/register" className="font-bold">Registrate</Link>

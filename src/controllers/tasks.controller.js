@@ -2,7 +2,6 @@ import { pool } from "../db.js"
 
 
 export const getTasks = async (req, res) => {
-    console.log(req.userId)
     const result = await pool.query('SELECT * FROM task WHERE user_id = $1', [req.userId])
     return res.json(result.rows)
 }
@@ -11,7 +10,7 @@ export const getTask = async (req, res) => {
 
     if (result.rowCount === 0) return res.status(404).json({ message: "Tarea no encontrada" })
 
-    return result.json(result.rows[0])
+    return res.json(result.rows[0])
 }
 export const createTask = async (req, res, next) => {
     const { title, description } = req.body
@@ -36,7 +35,7 @@ export const updateTask = async (req, res) => {
 
     const result = await pool.query('UPDATE task SET title = $1, description = $2 WHERE id = $3 RETURNING *', [title, description, id])
 
-    if(result.rowCount === 0) return res.status(404).json({ message: "Tarea no encontrada" }) 
+    if (result.rowCount === 0) return res.status(404).json({ message: "Tarea no encontrada" })
 
     return res.json(result.rows[0])
 }

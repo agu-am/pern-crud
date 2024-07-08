@@ -10,7 +10,7 @@ function RegisterPage() {
 
   const onSubmit = handleSubmit(async (data) => {
     const user = await signUp(data)
-    if (user) navigate('/profile')
+    if (user) navigate('/tasks')
   })
 
   return (
@@ -48,10 +48,10 @@ function RegisterPage() {
           {errors.password && <p className="text-red-500">La contraseña es requerida</p>}
           <Button>Registrar</Button>
           <div className="flex justify-between my-4">
-            <p>
+            <p className="mr-2">
               Ya tenes cuenta?
             </p>
-            <Link to="/login" className="font-bold ml-1">Iniciar sesion</Link>
+            <Link to="/login" className="font-bold">Iniciar sesion</Link>
           </div>
         </form>
       </Card>
