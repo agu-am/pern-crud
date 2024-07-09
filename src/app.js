@@ -1,4 +1,4 @@
-import express, urlencoded from "express";
+import express from "express";
 import cors from "cors"
 import morgan from "morgan"
 import cookieParser from "cookie-parser";
@@ -32,10 +32,6 @@ app.use('/ping', async (req, res) => {
 
 
 //ERROR HANDLER
-app.get('/test', (req, res) => {
-    throw new Error('Error de conexión')
-    res.send('test')
-})
 
 app.use((error, req, res, next) => {
     res.status(500).json({
