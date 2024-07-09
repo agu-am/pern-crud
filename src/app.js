@@ -1,4 +1,4 @@
-import express, { urlencoded } from "express";
+import express, urlencoded from "express";
 import cors from "cors"
 import morgan from "morgan"
 import cookieParser from "cookie-parser";
@@ -18,7 +18,7 @@ app.use(cors({
 app.use(morgan("dev"))
 app.use(cookieParser())
 app.use(express.json())
-app.use(urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: false }))
 
 //ROUTES
 app.get('/', (req, res) => res.json({ message: "welcome to my API" }))
