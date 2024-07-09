@@ -60,19 +60,22 @@ export function AuthProvider({ children }) {
     }
 
     useEffect(() => {
-        setLoading(true)
-        axios
-            .get("/profile")
-            .then((res) => {
-                setUser(res.data)
-                setIsAuth(true)
-            })
-            .catch((error) => {
-                setUser(null)
-                setIsAuth(false)
-            })
-        setLoading(false)
-    }, [])
+        setLoading(true);
+        if (Cookie.get("token")) {
+            axios
+                .get("/profile")
+                .then((res) => {
+                    setUser(res.data);
+                    setIsAuth(true);
+                })
+                .catch((err) => {
+                    setUser(null);
+                    setIsAuth(false);
+                });
+        }
+
+        setLoading(false);
+    }, []);
 
     useEffect(() => {
         const clean = setTimeout(() => {
