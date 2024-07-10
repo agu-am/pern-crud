@@ -15,6 +15,7 @@ app.use(cors({
     origin: ORIGIN,
     credentials: true
 }))
+app.enable('trust proxy')
 app.use(morgan("dev"))
 app.use(express.json())
 app.use(cookieParser())
