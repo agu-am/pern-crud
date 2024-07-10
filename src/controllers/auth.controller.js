@@ -25,9 +25,10 @@ export const signin = async (req, res) => {
     const token = await createAcessToken({ id: result.rows[0].id })
 
     res.cookie('token', token, {
-        httpOnly: false,
-        secure: true,      
-        sameSite: "none",
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        priority: "high",
         maxAge: 24 * 60 * 60 * 1000 // 1 día
     })
 
@@ -47,9 +48,10 @@ export const signup = async (req, res, next) => {
         const token = await createAcessToken({ id: result.rows[0].id })
 
         res.cookie('token', token, {
-            httpOnly: false,
-            secure: true,      
-            sameSite: "none",
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+            priority: "high",
             maxAge: 24 * 60 * 60 * 1000 // 1 día
         })
 
