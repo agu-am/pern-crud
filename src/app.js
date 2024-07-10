@@ -16,8 +16,8 @@ app.use(cors({
     credentials: true
 }))
 app.use(morgan("dev"))
-app.use(cookieParser())
 app.use(express.json())
+app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }))
 
 //ROUTES

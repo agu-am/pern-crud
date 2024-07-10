@@ -25,11 +25,12 @@ export const signin = async (req, res) => {
     const token = await createAcessToken({ id: result.rows[0].id })
 
     res.cookie('token', token, {
-        // httpOnly: true,
+        httpOnly: false,
         secure: true,      
         sameSite: "none",
         maxAge: 24 * 60 * 60 * 1000 // 1 día
     })
+
     return res.json(result.rows[0])
 }
 
@@ -46,7 +47,7 @@ export const signup = async (req, res, next) => {
         const token = await createAcessToken({ id: result.rows[0].id })
 
         res.cookie('token', token, {
-            // httpOnly: true,
+            httpOnly: false,
             secure: true,      
             sameSite: "none",
             maxAge: 24 * 60 * 60 * 1000 // 1 día
@@ -69,7 +70,7 @@ export const logout = (req, res) => {
     res.sendStatus(200)
 }
 
-export const profile = async (req, res) => { 
+export const profile = async (req, res) => {
     const result = await pool.query('SELECT * FROM users WHERE id = $1', [req.userId])
     return res.json(result.rows[0])
 }
