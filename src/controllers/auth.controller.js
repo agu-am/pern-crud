@@ -24,14 +24,13 @@ export const signin = async (req, res) => {
 
     const token = await createAcessToken({ id: result.rows[0].id })
 
-    res.cookie('token', token, {
-        httpOnly: true,
-        secure: true,      
-        // sameSite: "strict",
-        maxAge: 24 * 60 * 60 * 1000 // 1 día
-    })
-
-    return res.json(result.rows[0])
+    // res.cookie('token', token, {
+    //     // httpOnly: true,
+    //     secure: true,      
+    //     sameSite: "none",
+    //     maxAge: 24 * 60 * 60 * 1000 // 1 día
+    // })
+    return res.json({ user: result.rows[0], token })
 }
 
 export const signup = async (req, res, next) => {
@@ -46,14 +45,14 @@ export const signup = async (req, res, next) => {
 
         const token = await createAcessToken({ id: result.rows[0].id })
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: true,      
-            // sameSite: "strict",
-            maxAge: 24 * 60 * 60 * 1000 // 1 día
-        })
+        // res.cookie('token', token, {
+        //     // httpOnly: true,
+        //     secure: true,      
+        //     sameSite: "none",
+        //     maxAge: 24 * 60 * 60 * 1000 // 1 día
+        // })
 
-        return res.json(result.rows[0])
+        return res.json({ user: result.rows[0], token })
     } catch (error) {
         if (error.code === "23505") {
             return res.status(400).json({

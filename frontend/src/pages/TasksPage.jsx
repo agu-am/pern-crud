@@ -1,13 +1,16 @@
 import { useEffect } from "react"
 import TaskCard from "../components/tasks/TaskCard"
 import { useTask } from "../context/TaskContext"
+import { useAuth } from "../context/AuthContext"
 
 function TasksPage() {
 
   const { tasks, loadTasks } = useTask()
+  const { isAuth } = useAuth()
+
   useEffect(() => {
     loadTasks()
-  }, [])
+  }, [isAuth])
 
   if (tasks.length === 0) return (
     <div className="flex justify-center items-center h-[calc(100vh-64px)]">

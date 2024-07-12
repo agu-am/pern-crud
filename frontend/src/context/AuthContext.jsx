@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import axios from '../api/axios'
 import Cookie from 'js-cookie'
+import { set } from 'react-hook-form'
 
 export const AuthContext = createContext()
 
@@ -22,7 +23,8 @@ export function AuthProvider({ children }) {
     const signUp = async (data) => {
         try {
             const res = await axios.post("/signup", data)
-            setUser(res.data)
+            localStorage.setItem("token", res.data.token)
+            setUser(res.data.user)
             setIsAuth(true)
 
             return res.data
@@ -39,7 +41,8 @@ export function AuthProvider({ children }) {
     const signIn = async (data) => {
         try {
             const res = await axios.post("/signin", data)
-            setUser(res.data)
+            localStorage.setItem("token", res.data.token)
+            setUser(res.data.user)
             setIsAuth(true)
 
             return res.data
@@ -54,19 +57,21 @@ export function AuthProvider({ children }) {
     }
 
     const logout = async () => {
-        await axios.post("/logout")
+        // await axios.post("/logout")
+        localStorage.clear()
         setUser(null)
         setIsAuth(false)
     }
 
     useEffect(() => {
         setLoading(true);
-        if (Cookie.get("token")) {
+        if (localStorage.getItem("token")) {
             axios
                 .get("/profile")
                 .then((res) => {
                     setUser(res.data);
                     setIsAuth(true);
+                    console.log(res.data)
                 })
                 .catch((err) => {
                     setUser(null);
